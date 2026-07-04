@@ -55,7 +55,7 @@ DORIAX_INIT void init(){
     car.addChild(carengine.getEntity());
 
     carengine.loadSound("engine.wav");
-    carengine.setLopping(true);
+    carengine.setLooping(true);
     carengine.setDopplerFactor(10.0);
     carengine.setMinMaxDistance(1, 100);
     carengine.setAttenuationModel(SoundAttenuation::LINEAR_DISTANCE);
@@ -97,9 +97,9 @@ void onUpdate(){
 
     text.setText(std::to_string(Engine::getFramerate()).c_str());
 
-    if (Input::isKeyPressed(S_KEY_UP)){
+    if (Input::isKeyPressed(D_KEY_UP)){
         speed += 0.1;
-    }else if (Input::isKeyPressed(S_KEY_DOWN)){
+    }else if (Input::isKeyPressed(D_KEY_DOWN)){
         speed -= 0.1;
     }
     speed *= 0.95;
@@ -107,10 +107,10 @@ void onUpdate(){
     carengine.setVolume(1.0 + (abs(speed) * 0.5));
     carengine.setSpeed(1.0 + (abs(speed) * 0.5));
 
-    if (Input::isKeyPressed(S_KEY_LEFT)){
+    if (Input::isKeyPressed(D_KEY_LEFT)){
         if (curve < 3)
             curve += 0.4;
-    }else if (Input::isKeyPressed(S_KEY_RIGHT)){
+    }else if (Input::isKeyPressed(D_KEY_RIGHT)){
         if (curve > -3)
             curve -= 0.4;
     }else{

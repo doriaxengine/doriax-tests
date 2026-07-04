@@ -70,41 +70,41 @@ void onUpdate(){
     text3.setText(std::string("Camera Y: ") + std::to_string(camera.getWorldPosition().y));
     text4.setText(std::string("Camera Z: ") + std::to_string(camera.getWorldPosition().z));
 
-    if (Input::isKeyPressed(S_KEY_UP) || Input::isKeyPressed(S_KEY_W)){
+    if (Input::isKeyPressed(D_KEY_UP) || Input::isKeyPressed(D_KEY_W)){
         camera.walkForward(1);
     }
-    if (Input::isKeyPressed(S_KEY_DOWN) || Input::isKeyPressed(S_KEY_S)){
+    if (Input::isKeyPressed(D_KEY_DOWN) || Input::isKeyPressed(D_KEY_S)){
         camera.walkForward(-1);
     }
-    if (Input::isKeyPressed(S_KEY_LEFT)){
+    if (Input::isKeyPressed(D_KEY_LEFT)){
         camera.rotateView(1);
     }
-    if (Input::isKeyPressed(S_KEY_RIGHT)){
+    if (Input::isKeyPressed(D_KEY_RIGHT)){
         camera.rotateView(-1);
     }
-    if (Input::isKeyPressed(S_KEY_A)){
+    if (Input::isKeyPressed(D_KEY_A)){
         camera.slide(-1);
     }
-    if (Input::isKeyPressed(S_KEY_D)){
+    if (Input::isKeyPressed(D_KEY_D)){
         camera.slide(1);
     }
 
 }
 
 void onKeyDown(int key, bool repeat, int mods){
-    if (key == S_KEY_X){
+    if (key == D_KEY_X){
         camera.setPosition(camera.getPosition().x, camera.getPosition().y+10, camera.getPosition().z);
         camera.setTarget(camera.getTarget().x, camera.getTarget().y+10, camera.getTarget().z);
     }
 
-    if (key == S_KEY_Z){
+    if (key == D_KEY_Z){
         camera.setPosition(camera.getPosition().x, camera.getPosition().y-10, camera.getPosition().z);
         camera.setTarget(camera.getTarget().x, camera.getTarget().y-10, camera.getTarget().z);
     }
 }
 
 void onKeyUp(int key, bool repeat, int mods){
-    if (key == S_KEY_F){
+    if (key == D_KEY_F){
         if (!System::instance().isFullscreen()) {
             System::instance().requestFullscreen();
         }else{

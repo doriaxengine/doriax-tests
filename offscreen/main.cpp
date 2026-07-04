@@ -72,7 +72,7 @@ DORIAX_INIT void init(){
 }
 
 void onKeyDown(int key, bool repeat, int mods){
-    if (key == S_KEY_F){
+    if (key == D_KEY_F){
         if (image.getAnchorPreset() == AnchorPreset::CENTER){
             image.setAnchorPreset(AnchorPreset::FULL_LAYOUT);
         }else{
@@ -80,7 +80,7 @@ void onKeyDown(int key, bool repeat, int mods){
             image.setAnchorPreset(AnchorPreset::CENTER);
         }
     }
-    if (key == S_KEY_R){
+    if (key == D_KEY_R){
         if (camera->getFramebuffer()->getWidth() == 512){
             camera->setFramebufferSize(256, 256);
         }else{
@@ -90,17 +90,17 @@ void onKeyDown(int key, bool repeat, int mods){
 }
 
 void onUpdate(){
-    if (Input::isKeyPressed(S_KEY_UP)){
+    if (Input::isKeyPressed(D_KEY_UP)){
         speed += 0.1;
-    }else if (Input::isKeyPressed(S_KEY_DOWN)){
+    }else if (Input::isKeyPressed(D_KEY_DOWN)){
         speed -= 0.1;
     }
     speed *= 0.95;
 
-    if (Input::isKeyPressed(S_KEY_LEFT)){
+    if (Input::isKeyPressed(D_KEY_LEFT)){
         if (curve < 3)
             curve += 0.4;
-    }else if (Input::isKeyPressed(S_KEY_RIGHT)){
+    }else if (Input::isKeyPressed(D_KEY_RIGHT)){
         if (curve > -3)
             curve -= 0.4;
     }else{

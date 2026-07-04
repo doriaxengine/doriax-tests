@@ -107,28 +107,28 @@ DORIAX_INIT void init(){
 }
 
 void onUpdate(){
-    if (Input::isKeyPressed(S_KEY_UP) || Input::isKeyPressed(S_KEY_W)){
+    if (Input::isKeyPressed(D_KEY_UP) || Input::isKeyPressed(D_KEY_W)){
         camera.walkForward(1);
-    }else if (Input::isKeyPressed(S_KEY_DOWN) || Input::isKeyPressed(S_KEY_S)){
+    }else if (Input::isKeyPressed(D_KEY_DOWN) || Input::isKeyPressed(D_KEY_S)){
         camera.walkForward(-1);
     }
 
-    if (Input::isKeyPressed(S_KEY_A)){
+    if (Input::isKeyPressed(D_KEY_A)){
         camera.slide(-1);
-    }else if (Input::isKeyPressed(S_KEY_D)){
+    }else if (Input::isKeyPressed(D_KEY_D)){
         camera.slide(1);
     }
 
-    if (Input::isKeyPressed(S_KEY_LEFT)){
+    if (Input::isKeyPressed(D_KEY_LEFT)){
         camera.rotateView(2);
-    }else if (Input::isKeyPressed(S_KEY_RIGHT)){
+    }else if (Input::isKeyPressed(D_KEY_RIGHT)){
         camera.rotateView(-2);
     }
 }
 
 void onKeyDown(int key, bool repeat, int mods){
     //model.getAnimation(0).start();
-    if (key == S_KEY_SPACE){
+    if (key == D_KEY_SPACE){
         if (type == ParticlesType::SPRITE){
             text.setText("Model" + parttext);
             type = ParticlesType::MODEL;

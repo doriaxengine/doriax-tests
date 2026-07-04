@@ -111,10 +111,10 @@ DORIAX_INIT void init(){
 }
 
 void onUpdate() {
-    if (Input::isKeyPressed(S_KEY_LEFT)){
+    if (Input::isKeyPressed(D_KEY_LEFT)){
         Vector3 oldPos = map.getPosition();
         map.setPosition(oldPos.x+10, oldPos.y, oldPos.z);
-    }else if (Input::isKeyPressed(S_KEY_RIGHT)){
+    }else if (Input::isKeyPressed(D_KEY_RIGHT)){
         Vector3 oldPos = map.getPosition();
         map.setPosition(oldPos.x-10, oldPos.y, oldPos.z);
     }
