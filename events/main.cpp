@@ -90,25 +90,25 @@ void onTouchCancel(){
 
 void onMouseDown(int button, float x, float y, int mods){
     std::string modifier = "";
-    if (mods & S_MODIFIER_SHIFT)
+    if (mods & D_MODIFIER_SHIFT)
         modifier += "shift;";
-    if (mods & S_MODIFIER_CONTROL)
+    if (mods & D_MODIFIER_CONTROL)
         modifier += "control;";
-    if (mods & S_MODIFIER_ALT)
+    if (mods & D_MODIFIER_ALT)
         modifier += "alt;";
-    if (mods & S_MODIFIER_SUPER)
+    if (mods & D_MODIFIER_SUPER)
         modifier += "super;";
-    if (mods & S_MODIFIER_CAPS_LOCK)
+    if (mods & D_MODIFIER_CAPS_LOCK)
         modifier += "caps;";
-    if (mods & S_MODIFIER_NUM_LOCK)
+    if (mods & D_MODIFIER_NUM_LOCK)
         modifier += "num;";
 
     std::string bt = "";
-    if (button == S_MOUSE_BUTTON_LEFT)
+    if (button == D_MOUSE_BUTTON_LEFT)
         bt = "left";
-    if (button == S_MOUSE_BUTTON_RIGHT)
+    if (button == D_MOUSE_BUTTON_RIGHT)
         bt = "right";
-    if (button == S_MOUSE_BUTTON_MIDDLE)
+    if (button == D_MOUSE_BUTTON_MIDDLE)
         bt = "middle";
 
 
@@ -117,25 +117,25 @@ void onMouseDown(int button, float x, float y, int mods){
 
 void onMouseUp(int button, float x, float y, int mods){
     std::string modifier = "";
-    if (mods & S_MODIFIER_SHIFT)
+    if (mods & D_MODIFIER_SHIFT)
         modifier += "shift;";
-    if (mods & S_MODIFIER_CONTROL)
+    if (mods & D_MODIFIER_CONTROL)
         modifier += "control;";
-    if (mods & S_MODIFIER_ALT)
+    if (mods & D_MODIFIER_ALT)
         modifier += "alt;";
-    if (mods & S_MODIFIER_SUPER)
+    if (mods & D_MODIFIER_SUPER)
         modifier += "super;";
-    if (mods & S_MODIFIER_CAPS_LOCK)
+    if (mods & D_MODIFIER_CAPS_LOCK)
         modifier += "caps;";
-    if (mods & S_MODIFIER_NUM_LOCK)
+    if (mods & D_MODIFIER_NUM_LOCK)
         modifier += "num;";
 
     std::string bt = "";
-    if (button == S_MOUSE_BUTTON_LEFT)
+    if (button == D_MOUSE_BUTTON_LEFT)
         bt = "left";
-    if (button == S_MOUSE_BUTTON_RIGHT)
+    if (button == D_MOUSE_BUTTON_RIGHT)
         bt = "right";
-    if (button == S_MOUSE_BUTTON_MIDDLE)
+    if (button == D_MOUSE_BUTTON_MIDDLE)
         bt = "middle";
 
 
@@ -165,17 +165,17 @@ void onCharInput(wchar_t codepoint){
 
 void onKeyDown(int key, bool repeat, int mods){
     std::string modifier = "";
-    if (mods & S_MODIFIER_SHIFT)
+    if (mods & D_MODIFIER_SHIFT)
         modifier += "shift;";
-    if (mods & S_MODIFIER_CONTROL)
+    if (mods & D_MODIFIER_CONTROL)
         modifier += "control;";
-    if (mods & S_MODIFIER_ALT)
+    if (mods & D_MODIFIER_ALT)
         modifier += "alt;";
-    if (mods & S_MODIFIER_SUPER)
+    if (mods & D_MODIFIER_SUPER)
         modifier += "super;";
-    if (mods & S_MODIFIER_CAPS_LOCK)
+    if (mods & D_MODIFIER_CAPS_LOCK)
         modifier += "caps;";
-    if (mods & S_MODIFIER_NUM_LOCK)
+    if (mods & D_MODIFIER_NUM_LOCK)
         modifier += "num;";
     
     std::string rstr;
@@ -187,17 +187,17 @@ void onKeyDown(int key, bool repeat, int mods){
 
 void onKeyUp(int key, bool repeat, int mods){
     std::string modifier = "";
-    if (mods & S_MODIFIER_SHIFT)
+    if (mods & D_MODIFIER_SHIFT)
         modifier += "shift;";
-    if (mods & S_MODIFIER_CONTROL)
+    if (mods & D_MODIFIER_CONTROL)
         modifier += "control;";
-    if (mods & S_MODIFIER_ALT)
+    if (mods & D_MODIFIER_ALT)
         modifier += "alt;";
-    if (mods & S_MODIFIER_SUPER)
+    if (mods & D_MODIFIER_SUPER)
         modifier += "super;";
-    if (mods & S_MODIFIER_CAPS_LOCK)
+    if (mods & D_MODIFIER_CAPS_LOCK)
         modifier += "caps;";
-    if (mods & S_MODIFIER_NUM_LOCK)
+    if (mods & D_MODIFIER_NUM_LOCK)
         modifier += "num;";
     
     std::string rstr;

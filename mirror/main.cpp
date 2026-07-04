@@ -17,8 +17,7 @@ Shape terrain(&scene);
 SkyBox sky(&scene);
 Light sun(&scene);
 
-Camera cameramirror(&scene);
-Sprite mirror(&scene);
+Shape mirror(&scene);
 
 
 DORIAX_INIT void init(){
@@ -35,15 +34,13 @@ DORIAX_INIT void init(){
     terrain.setTexture("ground.png");
     terrain.setName("terrain");
 
-    cameramirror.setPosition(0, 5, 0);
-    cameramirror.setTarget(0, 5, 40);
-    cameramirror.setRenderToTexture(true);
-    cameramirror.setName("cameramirror");
-
-    mirror.setTexture(cameramirror.getFramebuffer());
-    mirror.setSize(10,10);
-    mirror.setPivotPreset(PivotPreset::CENTER);
-    mirror.setPosition(0,5,0);
+    // A planar mirror in a single call: an upright wall surface turned into a
+    // mirror. The engine creates and drives the reflection camera internally and
+    // feeds it back to the surface — no manual camera or per-frame aiming needed.
+    mirror.createWall(10, 10);          // vertical quad, +Z normal (faces the camera)
+    mirror.setPosition(0, 5, 0);
+    mirror.setAsMirror();               // default normal +Z matches the wall
+    mirror.setReceiveLights(false);     // show the reflection directly, unshaded
     mirror.setName("mirror");
 
     model.loadModel("WaterBottle.glb");
@@ -85,13 +82,6 @@ void onUpdate(){
     }else if (Input::isKeyPressed(S_KEY_RIGHT)){
         camera.rotateView(-2);
     }
-
-    // necessary if use camera.getWorldPosition() to update world positions
-    // scene.getSystem<RenderSystem>()->updateTransform(camera.getComponent<Transform>());
-
-    Vector3 camVec = mirror.getPosition() - camera.getPosition();
-    Vector3 reflVec = camVec.reflect(Vector3(0,0,1));
-    cameramirror.setTarget(cameramirror.getPosition() + reflVec);
 }
 
 void onKeyDown(int key, bool repeat, int mods){

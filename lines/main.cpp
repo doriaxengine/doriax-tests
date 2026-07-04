@@ -60,7 +60,7 @@ void onTouchMove(int pointer, float x, float y){
     float difY = lastTouchPos.y - y;
     lastTouchPos = Vector2(x, y);
 
-    if (Input::isMousePressed(S_MOUSE_BUTTON_1)){
+    if (Input::isMousePressed(D_MOUSE_BUTTON_1)){
         camera.walkForward(-0.05 * difY);
         camera.slide(0.02 * difX);
     }else{
