@@ -1,5 +1,6 @@
 canvasWidth = 1000
 canvasHeight = 600
+markerRadius = 9.0
 
 scene = Scene()
 camera = Camera(scene)
@@ -48,19 +49,28 @@ end
 
 function moveMouseLight(x, y)
     mouseLight:setPosition(x, y, 0)
-    mouseLightMarker:setPosition(x, y, 2)
+    mouseLightMarker:setPosition(x - markerRadius, y - markerRadius, 2)
+end
+
+function pointerYToSceneY(y)
+    return canvasHeight - y
+end
+
+function moveMouseLightFromPointer(x, y)
+    moveMouseLight(x, pointerYToSceneY(y))
 end
 
 function createLightMarker()
     local segments = 20
-    local radius = 9.0
+    local diameter = markerRadius * 2.0
 
     mouseLightMarker.name = "mouse light marker"
     for i = 0, segments do
-        local x = -radius + (2.0 * radius * i) / segments
-        local y = math.sqrt(math.max(0.0, radius * radius - x * x))
-        mouseLightMarker:addVertex(x, y)
-        mouseLightMarker:addVertex(x, -y)
+        local x = (diameter * i) / segments
+        local dx = x - markerRadius
+        local y = math.sqrt(math.max(0.0, markerRadius * markerRadius - dx * dx))
+        mouseLightMarker:addVertex(x, markerRadius + y)
+        mouseLightMarker:addVertex(x, markerRadius - y)
     end
     mouseLightMarker:setColor(1.0, 0.9, 0.18, 1.0)
     mouseLightMarker:moveToTop()
@@ -68,12 +78,12 @@ end
 
 function onTouchStart(pointer, x, y)
     draggingLight = true
-    moveMouseLight(x, y)
+    moveMouseLightFromPointer(x, y)
 end
 
 function onTouchMove(pointer, x, y)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
@@ -84,13 +94,13 @@ end
 function onMouseDown(button, x, y, mods)
     if button == Input.MOUSE_BUTTON_1 then
         draggingLight = true
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
 function onMouseMove(x, y, mods)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
