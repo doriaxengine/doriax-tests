@@ -49,28 +49,24 @@ end
 
 function moveMouseLight(x, y)
     mouseLight:setPosition(x, y, 0)
-    mouseLightMarker:setPosition(x - markerRadius, y - markerRadius, 2)
-end
-
-function pointerYToSceneY(y)
-    return canvasHeight - y
+    mouseLightMarker:setPosition(x, y, 2)
 end
 
 function moveMouseLightFromPointer(x, y)
-    moveMouseLight(x, pointerYToSceneY(y))
+    local ray = camera:screenToRay(x, y)
+    local pointerPosition = ray.origin
+    moveMouseLight(pointerPosition.x, pointerPosition.y)
 end
 
 function createLightMarker()
     local segments = 20
-    local diameter = markerRadius * 2.0
 
     mouseLightMarker.name = "mouse light marker"
     for i = 0, segments do
-        local x = (diameter * i) / segments
-        local dx = x - markerRadius
-        local y = math.sqrt(math.max(0.0, markerRadius * markerRadius - dx * dx))
-        mouseLightMarker:addVertex(x, markerRadius + y)
-        mouseLightMarker:addVertex(x, markerRadius - y)
+        local x = -markerRadius + (2.0 * markerRadius * i) / segments
+        local y = math.sqrt(math.max(0.0, markerRadius * markerRadius - x * x))
+        mouseLightMarker:addVertex(x, y)
+        mouseLightMarker:addVertex(x, -y)
     end
     mouseLightMarker:setColor(1.0, 0.9, 0.18, 1.0)
     mouseLightMarker:moveToTop()

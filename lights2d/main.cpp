@@ -34,7 +34,6 @@ Polygon mouseLightMarker(&scene);
 bool draggingLight = false;
 
 void moveMouseLight(float x, float y);
-float pointerYToSceneY(float y);
 void moveMouseLightFromPointer(float x, float y);
 void createLightMarker();
 void addBlock(int index, const BlockData& data);
@@ -140,28 +139,23 @@ void addBlock(int index, const BlockData& data){
 
 void moveMouseLight(float x, float y){
     mouseLight.setPosition(x, y, 0);
-    mouseLightMarker.setPosition(x - markerRadius, y - markerRadius, 2);
-}
-
-float pointerYToSceneY(float y){
-    return static_cast<float>(canvasHeight) - y;
+    mouseLightMarker.setPosition(x, y, 2);
 }
 
 void moveMouseLightFromPointer(float x, float y){
-    moveMouseLight(x, pointerYToSceneY(y));
+    Vector3 pointerPosition = camera.screenToRay(x, y).getOrigin();
+    moveMouseLight(pointerPosition.x, pointerPosition.y);
 }
 
 void createLightMarker(){
     const int segments = 20;
-    const float diameter = markerRadius * 2.0f;
 
     mouseLightMarker.setName("mouse light marker");
     for (int i = 0; i <= segments; i++){
-        float x = (diameter * i) / segments;
-        float dx = x - markerRadius;
-        float y = std::sqrt(std::max(0.0f, markerRadius * markerRadius - dx * dx));
-        mouseLightMarker.addVertex(x, markerRadius + y);
-        mouseLightMarker.addVertex(x, markerRadius - y);
+        float x = -markerRadius + (2.0f * markerRadius * i) / segments;
+        float y = std::sqrt(std::max(0.0f, markerRadius * markerRadius - x * x));
+        mouseLightMarker.addVertex(x, y);
+        mouseLightMarker.addVertex(x, -y);
     }
     mouseLightMarker.setColor(1.0, 0.9, 0.18, 1.0);
     mouseLightMarker.moveToTop();
