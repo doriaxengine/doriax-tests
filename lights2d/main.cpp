@@ -32,8 +32,6 @@ Polygon mouseLightMarker(&scene);
 
 bool draggingLight = false;
 
-float pointerYToSceneY(float y);
-void moveMouseLightFromPointer(float x, float y);
 void moveMouseLight(float x, float y);
 void createLightMarker();
 void addBlock(int index, const BlockData& data);
@@ -137,14 +135,6 @@ void addBlock(int index, const BlockData& data){
     occluder.setEnabled(true);
 }
 
-float pointerYToSceneY(float y){
-    return (float)canvasHeight - y;
-}
-
-void moveMouseLightFromPointer(float x, float y){
-    moveMouseLight(x, pointerYToSceneY(y));
-}
-
 void moveMouseLight(float x, float y){
     mouseLight.setPosition(x, y, 0);
     mouseLightMarker.setPosition(x, y, 2);
@@ -152,7 +142,7 @@ void moveMouseLight(float x, float y){
 
 void createLightMarker(){
     const int segments = 20;
-    const float radius = 16.0f;
+    const float radius = 9.0f;
 
     mouseLightMarker.setName("mouse light marker");
     for (int i = 0; i <= segments; i++){
@@ -167,12 +157,12 @@ void createLightMarker(){
 
 void onTouchStart(int pointer, float x, float y){
     draggingLight = true;
-    moveMouseLightFromPointer(x, y);
+    moveMouseLight(x, y);
 }
 
 void onTouchMove(int pointer, float x, float y){
     if (draggingLight || Input::isMousePressed(D_MOUSE_BUTTON_1)){
-        moveMouseLightFromPointer(x, y);
+        moveMouseLight(x, y);
     }
 }
 
@@ -183,13 +173,13 @@ void onTouchEnd(int pointer, float x, float y){
 void onMouseDown(int button, float x, float y, int mods){
     if (button == D_MOUSE_BUTTON_1){
         draggingLight = true;
-        moveMouseLightFromPointer(x, y);
+        moveMouseLight(x, y);
     }
 }
 
 void onMouseMove(float x, float y, int mods){
     if (draggingLight || Input::isMousePressed(D_MOUSE_BUTTON_1)){
-        moveMouseLightFromPointer(x, y);
+        moveMouseLight(x, y);
     }
 }
 

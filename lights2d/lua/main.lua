@@ -46,14 +46,6 @@ function addBlock(index, data)
     occluder.enabled = true
 end
 
-function pointerYToSceneY(y)
-    return canvasHeight - y
-end
-
-function moveMouseLightFromPointer(x, y)
-    moveMouseLight(x, pointerYToSceneY(y))
-end
-
 function moveMouseLight(x, y)
     mouseLight:setPosition(x, y, 0)
     mouseLightMarker:setPosition(x, y, 2)
@@ -61,7 +53,7 @@ end
 
 function createLightMarker()
     local segments = 20
-    local radius = 16.0
+    local radius = 9.0
 
     mouseLightMarker.name = "mouse light marker"
     for i = 0, segments do
@@ -76,12 +68,12 @@ end
 
 function onTouchStart(pointer, x, y)
     draggingLight = true
-    moveMouseLightFromPointer(x, y)
+    moveMouseLight(x, y)
 end
 
 function onTouchMove(pointer, x, y)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLightFromPointer(x, y)
+        moveMouseLight(x, y)
     end
 end
 
@@ -92,13 +84,13 @@ end
 function onMouseDown(button, x, y, mods)
     if button == Input.MOUSE_BUTTON_1 then
         draggingLight = true
-        moveMouseLightFromPointer(x, y)
+        moveMouseLight(x, y)
     end
 end
 
 function onMouseMove(x, y, mods)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLightFromPointer(x, y)
+        moveMouseLight(x, y)
     end
 end
 
