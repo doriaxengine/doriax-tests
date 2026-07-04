@@ -10,7 +10,7 @@ blockOccluders = {}
 
 mouseLight = Light2D(scene)
 fillLight = Light2D(scene)
-mouseLightMarker = Sprite(scene)
+mouseLightMarker = Polygon(scene)
 
 draggingLight = false
 
@@ -46,19 +46,42 @@ function addBlock(index, data)
     occluder.enabled = true
 end
 
+function pointerYToSceneY(y)
+    return canvasHeight - y
+end
+
+function moveMouseLightFromPointer(x, y)
+    moveMouseLight(x, pointerYToSceneY(y))
+end
+
 function moveMouseLight(x, y)
     mouseLight:setPosition(x, y, 0)
     mouseLightMarker:setPosition(x, y, 2)
 end
 
+function createLightMarker()
+    local segments = 20
+    local radius = 16.0
+
+    mouseLightMarker.name = "mouse light marker"
+    for i = 0, segments do
+        local x = -radius + (2.0 * radius * i) / segments
+        local y = math.sqrt(math.max(0.0, radius * radius - x * x))
+        mouseLightMarker:addVertex(x, y)
+        mouseLightMarker:addVertex(x, -y)
+    end
+    mouseLightMarker:setColor(1.0, 0.9, 0.18, 1.0)
+    mouseLightMarker:moveToTop()
+end
+
 function onTouchStart(pointer, x, y)
     draggingLight = true
-    moveMouseLight(x, y)
+    moveMouseLightFromPointer(x, y)
 end
 
 function onTouchMove(pointer, x, y)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
@@ -69,13 +92,13 @@ end
 function onMouseDown(button, x, y, mods)
     if button == Input.MOUSE_BUTTON_1 then
         draggingLight = true
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
 function onMouseMove(x, y, mods)
     if draggingLight or Input.isMousePressed(Input.MOUSE_BUTTON_1) then
-        moveMouseLight(x, y)
+        moveMouseLightFromPointer(x, y)
     end
 end
 
@@ -127,14 +150,7 @@ mouseLight.shadowBias = 0.008
 mouseLight.shadowSoftness = 2.0
 mouseLight.mapResolution = 768
 
-mouseLightMarker.name = "mouse light marker"
-mouseLightMarker:setTexture("crate.png")
-mouseLightMarker:setSize(28, 28)
-mouseLightMarker.pivotPreset = PivotPreset.CENTER
-mouseLightMarker:setColor(1.0, 0.88, 0.20, 1.0)
-mouseLightMarker.receiveLights = false
-mouseLightMarker.receiveShadows = false
-mouseLightMarker.autoTransparency = false
+createLightMarker()
 
 moveMouseLight(505, 235)
 

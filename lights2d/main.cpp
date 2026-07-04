@@ -1,5 +1,7 @@
 #include "Doriax.h"
 
+#include <algorithm>
+#include <cmath>
 #include <string>
 #include <vector>
 
@@ -26,11 +28,14 @@ std::vector<Sprite> blocks;
 
 Light2D mouseLight(&scene);
 Light2D fillLight(&scene);
-Sprite mouseLightMarker(&scene);
+Polygon mouseLightMarker(&scene);
 
 bool draggingLight = false;
 
+float pointerYToSceneY(float y);
+void moveMouseLightFromPointer(float x, float y);
 void moveMouseLight(float x, float y);
+void createLightMarker();
 void addBlock(int index, const BlockData& data);
 void onTouchStart(int pointer, float x, float y);
 void onTouchMove(int pointer, float x, float y);
@@ -97,14 +102,7 @@ DORIAX_INIT void init(){
     mouseLight.setShadowSoftness(2.0);
     mouseLight.setMapResolution(768);
 
-    mouseLightMarker.setName("mouse light marker");
-    mouseLightMarker.setTexture("crate.png");
-    mouseLightMarker.setSize(28, 28);
-    mouseLightMarker.setPivotPreset(PivotPreset::CENTER);
-    mouseLightMarker.setColor(1.0, 0.88, 0.20, 1.0);
-    mouseLightMarker.setReceiveLights(false);
-    mouseLightMarker.setReceiveShadows(false);
-    mouseLightMarker.setAutoTransparency(false);
+    createLightMarker();
 
     moveMouseLight(505, 235);
 
@@ -139,19 +137,42 @@ void addBlock(int index, const BlockData& data){
     occluder.setEnabled(true);
 }
 
+float pointerYToSceneY(float y){
+    return (float)canvasHeight - y;
+}
+
+void moveMouseLightFromPointer(float x, float y){
+    moveMouseLight(x, pointerYToSceneY(y));
+}
+
 void moveMouseLight(float x, float y){
     mouseLight.setPosition(x, y, 0);
     mouseLightMarker.setPosition(x, y, 2);
 }
 
+void createLightMarker(){
+    const int segments = 20;
+    const float radius = 16.0f;
+
+    mouseLightMarker.setName("mouse light marker");
+    for (int i = 0; i <= segments; i++){
+        float x = -radius + (2.0f * radius * i) / segments;
+        float y = std::sqrt(std::max(0.0f, radius * radius - x * x));
+        mouseLightMarker.addVertex(x, y);
+        mouseLightMarker.addVertex(x, -y);
+    }
+    mouseLightMarker.setColor(1.0, 0.9, 0.18, 1.0);
+    mouseLightMarker.moveToTop();
+}
+
 void onTouchStart(int pointer, float x, float y){
     draggingLight = true;
-    moveMouseLight(x, y);
+    moveMouseLightFromPointer(x, y);
 }
 
 void onTouchMove(int pointer, float x, float y){
     if (draggingLight || Input::isMousePressed(D_MOUSE_BUTTON_1)){
-        moveMouseLight(x, y);
+        moveMouseLightFromPointer(x, y);
     }
 }
 
@@ -162,13 +183,13 @@ void onTouchEnd(int pointer, float x, float y){
 void onMouseDown(int button, float x, float y, int mods){
     if (button == D_MOUSE_BUTTON_1){
         draggingLight = true;
-        moveMouseLight(x, y);
+        moveMouseLightFromPointer(x, y);
     }
 }
 
 void onMouseMove(float x, float y, int mods){
     if (draggingLight || Input::isMousePressed(D_MOUSE_BUTTON_1)){
-        moveMouseLight(x, y);
+        moveMouseLightFromPointer(x, y);
     }
 }
 
